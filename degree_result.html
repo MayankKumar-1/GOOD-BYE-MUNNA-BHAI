@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Full Degree</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+  
+  <script src="js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>  
+  $(document).ready(function () {  
+        
+          var u = window.location.href;
+          var i = u.search("number") +7;
+          var key = u.slice(i,);
+          
+          //var hash= "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg" 
+          //var doc = "https://ipfs.io/ipfs/"+hash
+          
+          //document.getElementById("dimg").setAttribute("src", doc);
+            console.log(key);
+            var api_url = 'http://localhost:3005/api/org.akgec.sem8.education.asset.Certificate/'
+           
+            $.ajax({
+        url: api_url + key ,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function(result){
+            console.log(result);
+            document.getElementById("data1").innerHTML = "Roll Number : "+result.certificateNo;
+            document.getElementById("data2").innerHTML = "Student Name : "+result.studentName;
+            
+            document.getElementById("dimg").setAttribute("src", "https://ipfs.io/ipfs/"+result.hashCode);
+        }
+        
+
+    });
+    
+    
+  
+     
+  });  
+</script>  
+
+
+</head>
+
+<body>
+<div class="container">
+<div class="container">
+<div class="text-center" style="background:Aqua">
+<br><h1><b>FULL DEGREE</b></h1><br>
+</div>
+</div>
+<div class="container">
+<div class="row">
+  
+  <div class="col"><div class="jumbotron" style="background:Azure">
+  
+   <div id="data1"></div><!-- number here  --><br><br>
+
+   <div id="data2"></div> <!-- number here  --><br><br>
+
+   <!-- image  php-->
+   <center>
+    Image
+    <br><br>
+    
+    <div class="row">
+      <img id="dimg" src="" class="rounded mx-auto d-block" height="800" width="800">
+    </div>
+    <p id="p123"></p>
+   </center>
+  
+</div>
+</div>
+  
+</div></div></div>
+</div>
+
+
+</body>
+</html>

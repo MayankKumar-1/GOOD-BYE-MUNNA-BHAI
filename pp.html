@@ -1,0 +1,83 @@
+<html>
+
+<head>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/BrowserFS/2.0.0/browserfs.min.js"></script>
+       <script>BrowserFS.install(window);</script>
+
+    <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"
+    integrity="sha384-5bXRcW9kyxxnSMbOoHzraqa7Z0PQWIao+cgeg327zit1hz5LZCEbIMx/LWKPReuB"
+    crossorigin="anonymous"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<script>
+	var api_url = 'http://localhost:3005/api/org.akgec.sem8.education.asset.Certificate/'
+            console.log(api_url);
+          //datafrom url
+          //file:///C:/Users/User/Desktop/project/Final/GBMB/pp.html?number=12&name=123&highestDegree=45&degreeImage=123.JPG&hash1=QmcMuo7392tJFiVZPnkgTNoByek7iac6aaL64sFt6f69JT
+          var u = window.location.href;
+            var n=0; 
+
+          var i = u.search("number") +7;
+          var j = u.search("name");
+          var a1 = u.slice(i,j-1);
+          
+          
+          i = u.search("name") +5;
+          j = u.search("highestDegree");
+          var a2 = u.slice(i,j-1);
+          for(n=0; n<a2.length;n++) {
+            if (a2[n] == "+") {a2= a2.substring(0,n)+' '+a2.substring(n+1);}
+         }
+
+          i = u.search("highestDegree") +14;
+          j = u.search("degreeImage");
+          var a3 = u.slice(i,j-1);
+          for(n=0; n<a3.length;n++) {
+            if (a3[n] == "+") {a3= a3.substring(0,n)+' '+a3.substring(n+1);}
+         }
+
+
+          i = u.search("hash1") +6;
+          var a4 = u.slice(i,);
+          
+          //data json
+          
+          var dat={"$class":"org.akgec.sem8.education.asset.Certificate",
+                    "certificateNo": a1,
+                    "studentName" : a2,
+                    "highestdegree" : a3,
+                    "hashCode" : a4
+          }
+          
+          console.log(dat);
+          
+            $.ajax({
+        type: 'POST',
+        url: api_url ,
+        ContentType: "application/json",
+        dataType: 'json',
+        data: dat,
+        success: function(result){
+            console.log(result);
+            console.log("done");
+            window.location.href = "./upload_data_successfull.html";
+        }
+    });
+
+
+</script>
+
+</head>
+
+<body></body>
+
+</html>

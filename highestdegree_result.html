@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Highest Degree</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>  
+  $(document).ready(function () {  
+        
+          var u = window.location.href;
+          var i = u.search("number") +7;
+          var key = u.slice(i,);
+            
+            console.log(key);
+            var api_url = 'http://localhost:3005/api/org.akgec.sem8.education.asset.Certificate/'
+           
+            $.ajax({
+        url: api_url + key ,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function(result){
+            console.log(result);
+            document.getElementById("data1").innerHTML = "Roll Number : "+result.certificateNo;
+            document.getElementById("data2").innerHTML = "Student Name : "+result.studentName;
+            document.getElementById("data3").innerHTML = "Highest Degree : "+result.highestdegree;
+        
+        }
+        
+
+    });
+});
+</script>
+</head>
+
+<body>
+
+<div class="container">
+<div class="container">
+<div class="jumbotron text-center" style="background:Aqua">
+<h1><b>Highest Degree</b></h1>
+</div>
+</div>
+<div class="container">
+<div class="row">
+    <div class="col"><div class="jumbotron" style="background:Azure">
+  
+      <div id="data1"></div><!-- number here  --><br><br>
+
+      <div id="data2"></div> <!-- number here  --><br><br>
+     
+        <!-- Highest degree  -->
+        <center>
+         <u>Highest Degree </u>
+         <br/><br/>
+         <!-- Highest degree  -->
+         
+         <div id="data3"></div>
+        </center>
+       
+     </div>
+     </div>
+</div>
+  
+</div></div></div>
+</div>
+</body>
+
+</html>

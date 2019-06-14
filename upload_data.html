@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Upload Data</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/BrowserFS/2.0.0/browserfs.min.js"></script>
+       <script>BrowserFS.install(window);</script>
+
+    <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"
+    integrity="sha384-5bXRcW9kyxxnSMbOoHzraqa7Z0PQWIao+cgeg327zit1hz5LZCEbIMx/LWKPReuB"
+    crossorigin="anonymous"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>  
+  $(document).ready(function () {  
+      $("#Save").click(function () {  
+
+          //var hash or link
+          //ipfs code or img code
+          console.log(1);
+          //ipfs code end
+          var no = document.getElementById("number").value;
+          console.log(2);
+          var nam = document.getElementById("name").value;
+          console.log(3);
+          var deg = document.getElementById("highestDegree").value;
+          console.log(4);
+           
+          //ipfs upload
+          //var has='${result[0].hash}';
+          const reader = new FileReader();
+      reader.onloadend = function() {
+        //const ipfs = window.IpfsApi('localhost', 5001) // Connect to IPFS
+        const ipfs = window.IpfsApi({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
+        var Buffer = BrowserFS.BFSRequire('buffer').Buffer;
+           var buf = Buffer.from(reader.result);
+           console.log(buf);
+        //const buf = buffer.Buffer(reader.result) // Convert data into buffer
+        ipfs.files.add(buf, (err, result) => { // Upload buffer to IPFS
+          console.log(5);
+         
+          if(err) {
+            console.log("e1");
+            console.error(err)
+            console.log("e2");
+            return
+          }
+          console.log(6);
+          //store hash
+	//console.log(result.Hash);
+          var has= result[0].hash;
+          let url = `https://infura.io/ipfs/${result[0].hash}`
+          console.log(`Url --> ${url}`)
+          document.getElementById("hash1").value= has;
+          //document.getElementById("url").href= url
+          //document.getElementById("output").src = url
+  		console.log("h1");        
+console.log(has);
+console.log("h2");   
+
+		//ipfs done
+
+        //if
+          if(has) {
+           
+            console.log(no+nam+deg+has);
+           //submit
+           document.forms["form1"].submit();
+           
+           /* 
+            var api_url = 'http://localhost:3005/api/org.akgec.sem8.education.asset.Certificate/'
+            console.log(api_url);
+          //data json
+          var dat={ 
+                    "$class":"org.akgec.sem8.education.asset.Certificate",
+                    "certificateNo": no,
+                    "studentName" : nam,
+                    "highestdegree" : deg,
+                    "hashCode" : has
+          }          
+          console.log(dat);
+          if(dat){
+            $.ajax({
+                type: 'POST',
+                url: api_url ,
+                contentType: "application/json",
+                dataType: 'json',
+                data: dat,
+                success: function(result){
+                  console.log("yo");
+                    console.log(result);
+                    document.getElementById("successMsg").innerHTML="Sucessfull";
+        }
+    });
+  }
+   */          
+          }//ifend
+
+        })
+      }
+      console.log(7);
+      const photo = document.getElementById("degreeImage");
+      reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
+      console.log(8);
+        
+
+      });  
+  });  
+</script> 
+
+
+</head>
+
+<body>
+<div class="container" >
+<div class="container">
+<div class="jumbotron text-center" style="background:Aqua">
+<h1><b>Upload Student Data</b></h1>
+</div>
+</div>
+<div class="container">
+<div class="row">
+  
+  <div class="col"><div class="jumbotron" style="background:Azure">
+  
+    <form id="form1" action="./pp.html">
+  <div class="form-group">
+  Unique ID/Roll Number : 
+  <input type="text" name="number" id="number">
+  <br><br>
+  Student Name : 
+  <input type="text" name="name" id="name">
+  <br><br>
+  Highest Degree : 
+  <input type="text" name="highestDegree" id="highestDegree">
+  <br><br>
+  
+  <!--image-->
+  <div class="form-group">
+    <label for="degreeImage">Upload Degree Image</label>
+    <input type="file" class="form-control-file" name="degreeImage"id="degreeImage">
+  </div>
+
+  <input type="hidden" name="hash1" id="hash1" value="" />
+
+  <br><br>
+  <center><input type="button" id="Save" value="Save Data" class="btn btn-primary" />  </center>
+   </form> 
+  
+   
+
+   <!--show success message-->
+   <br>
+   <div id="successMsg"></div>
+
+  </div>
+</div>
+</div>
+  
+</div></div></div>
+</div>
+</body>
+</html>
